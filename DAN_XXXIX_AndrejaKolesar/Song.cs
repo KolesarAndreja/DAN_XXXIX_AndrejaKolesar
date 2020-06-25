@@ -30,11 +30,16 @@ namespace DAN_XXXIX_AndrejaKolesar
 
 
         #region reading and selecting song
+        
+        //override ToString method
         public override string ToString()
         {
             return Author + "," + Name + "," + Duration;
         }
 
+        /// <summary>
+        /// Read all songs from file and return list of this songs
+        /// </summary>
         public List<Song> GetAllSongs()
         {
             List<Song> allSongs = new List<Song>();
@@ -53,7 +58,9 @@ namespace DAN_XXXIX_AndrejaKolesar
             }
             return allSongs;
         }
-
+        /// <summary>
+        /// Print songs from list of all songs 
+        /// </summary>
         public void PrintAllSongs()
         {
             List<Song> songs = GetAllSongs();
@@ -63,35 +70,43 @@ namespace DAN_XXXIX_AndrejaKolesar
             }
         }
 
+        /// <summary>
+        /// Select single one song and return this Song
+        /// </summary>
+        /// <returns></returns>
         public Song SelectOneSong()
         {
             List<Song> allSongs = GetAllSongs();
             PrintAllSongs();
-            Console.Write("Select one song: ");
-            int n = ValidNumber(allSongs.Count);
+
+            Console.Write("*You can stop song with Tab key. \nSelect one song: ");
+            int n = Validation.ValidNumber(allSongs.Count);
             return allSongs[n - 1];
         }
         #endregion
 
 
         #region Add
+        /// <summary>
+        /// Add new song to the file Music.txt. Ask user for all information of the song.
+        /// </summary>
         public void AddSong()
         {
             //author
             Console.Write("Enter the Author of song: ");
             string author = Console.ReadLine();
-            author = CheckIfNullOrEmpty(author);
+            author = Validation.CheckIfNullOrEmpty(author);
             //name
             Console.Write("Enter the name of song: ");
             string songName = Console.ReadLine();
-            songName = CheckIfNullOrEmpty(songName);
+            songName = Validation.CheckIfNullOrEmpty(songName);
             //duration
             Console.Write("Enter the duration of a song [h, m, sec]. \nhours:");
-            int h = ValidNumber(int.MaxValue);
+            int h = Validation.ValidNumber(int.MaxValue);
             Console.Write("minutes: ");
-            int m = ValidNumber(59);
+            int m = Validation.ValidNumber(59);
             Console.Write("seconds: ");
-            int s = ValidNumber(59);
+            int s = Validation.ValidNumber(59);
             TimeSpan time = new TimeSpan(h, m, s);
             Song song = new Song(author, songName, time);
             //Add new song to file
@@ -103,31 +118,7 @@ namespace DAN_XXXIX_AndrejaKolesar
         #endregion
 
 
-        #region validation methods
-        //valid int input
-        public static int ValidNumber(int limit)
-        {
-            string s = Console.ReadLine();
-            int num;
-            bool b = Int32.TryParse(s, out num);
-            while (!b || num < 0 || num > limit)
-            {
-                Console.Write("Invalid input. Try again: ");
-                s = Console.ReadLine();
-                b = Int32.TryParse(s, out num);
-            }
-            return num;
-        }
 
-        public static string CheckIfNullOrEmpty(string word)
-        {
-            while (string.IsNullOrEmpty(word))
-            {
-                Console.Write("Invalid input. Try again: ");
-                word = Console.ReadLine();
-            }
-            return word;
-        }
-        #endregion
+
     }
 }
