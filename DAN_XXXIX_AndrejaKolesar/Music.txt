@@ -1,8 +1,5 @@
 ﻿John Lennon,Imagine,00:00:12
 Bob Dylan,Like a Rolling Stone,00:06:13
-Nicim izazvan,Glas,00:04:22
-Melani,Morning,00:00:08
-Lana Del Rey,Shadow,00:00:00
-Sars,Glupost,00:00:06
-Sara,yes,00:00:07
+Nicim izazvan,Glas,00:00:10
 Mia,Ljubav,00:00:04
+Sars,Lutka,00:00:05

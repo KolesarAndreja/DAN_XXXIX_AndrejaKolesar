@@ -40,21 +40,17 @@ namespace DAN_XXXIX_AndrejaKolesar
                         song.AddSong();
                         break;
                     case "2":
-                        
-                        while (true)
+                        player.PlaySong();
+                        Console.Write("Do you want to turn off player? [yes,no] : ");
+                        string answer = Validation.YesNo();
+                        if (answer == "yes" || answer == "y")
                         {
-                            player.PlaySong();
-                            Console.Write("Do you want one more song or to turn off player? [yes -> new song /no -> turn off] : ");
-                            string answer = Validation.YesNo();
-                            if (answer == "no" || answer == "n")
-                            {
-                                Notify();
-                                selected = "3";
-                                break;
-                            }
+                            Notify();
+                            selected = "3";
                         }
                         break;
                     case "3":
+                        Notify();
                         break;
                     default:
                         Console.Write("Invalid input. ");
