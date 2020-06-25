@@ -10,8 +10,10 @@ namespace DAN_XXXIX_AndrejaKolesar
     class Player
     {
         Song song = new Song();
-        Advertisement myAds = new Advertisement();
-        AutoResetEvent AutoReset = new AutoResetEvent(false);
+        List<string> allAds = Advertisement.GetAllAds();
+        AutoResetEvent songReset = new AutoResetEvent(false);
+        AutoResetEvent adReset = new AutoResetEvent(false);
+        Random random = new Random();
 
         public void PlaySong()
         {
@@ -22,15 +24,17 @@ namespace DAN_XXXIX_AndrejaKolesar
             string endingTime = endTime.ToLongTimeString();
 
             Console.WriteLine("Current time: {0}    Current song: {1}       EndTime: {2}", currentTime, mySong.Name, endingTime );
-            Timer timer = new Timer(new TimerCallback(SongInProgress), endTime, 0, 1000);
-            AutoReset.WaitOne();
-            timer.Dispose();
-           
-
+            Timer timerSong = new Timer(new TimerCallback(SongInProgress), endTime, 0, 1000);
+            adReset.WaitOne();
+            Timer timerAds = new Timer(new TimerCallback(Advertise), null, 0, 200);
+            songReset.WaitOne();
+            timerSong.Dispose();
+            timerAds.Dispose();
         }
 
         public void SongInProgress(object endingTime)
         {
+            adReset.Set();
             DateTime end = Convert.ToDateTime(endingTime);
             if(DateTime.Now < end)
             {
@@ -39,8 +43,15 @@ namespace DAN_XXXIX_AndrejaKolesar
             else
             {
                 Console.WriteLine("The song has ended.");
-                AutoReset.Set();
+                songReset.Set();
             }
+
+        }
+
+        public void Advertise(object state)
+        {
+            int n = random.Next(0, allAds.Count);
+            Console.WriteLine(allAds[n]);
 
         }
     }

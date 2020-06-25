@@ -9,9 +9,9 @@ namespace DAN_XXXIX_AndrejaKolesar
 {
     class Advertisement
     {
-        public string fileName = @"..\..\Reklame.txt";
+        public static string fileName = @"..\..\Reklame.txt";
 
-        public List<string> GetAllAds()
+        public static List<string> GetAllAds()
         {
             List<string> allAds = new List<string>();
             using (StreamReader sr = File.OpenText(fileName))
