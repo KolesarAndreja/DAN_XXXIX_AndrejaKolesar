@@ -9,13 +9,15 @@ namespace DAN_XXXIX_AndrejaKolesar
 {
     class Song
     {
+        #region property and field
         public string Author { get; set; }
         public string Name { get; set; }
         public TimeSpan Duration { get; set; }
-
-         
         public string fileName = @"..\..\Music.txt";
+        #endregion
 
+
+        #region constructors
         public Song() { }
 
         public Song(string author, string name, TimeSpan duration)
@@ -24,12 +26,55 @@ namespace DAN_XXXIX_AndrejaKolesar
             Name = name;
             Duration = duration;
         }
+        #endregion constructors
 
+
+        #region reading and selecting song
         public override string ToString()
         {
-            return Author + ":" + Name + " " + Duration;
+            return Author + "," + Name + "," + Duration;
         }
 
+        public List<Song> GetAllSongs()
+        {
+            List<Song> allSongs = new List<Song>();
+            using (StreamReader sr = File.OpenText(fileName))
+            {
+                string s;
+                while ((s = sr.ReadLine()) != null)
+                {
+                    string authorOfSong = s.Split(',')[0];
+                    string nameOfSong = s.Split(',')[1];
+                    string durationOfSong = s.Split(',')[2];
+                    TimeSpan.TryParse(durationOfSong, out TimeSpan d);
+                    Song song = new Song(authorOfSong, nameOfSong, d);
+                    allSongs.Add(song);
+                }
+            }
+            return allSongs;
+        }
+
+        public void PrintAllSongs()
+        {
+            List<Song> songs = GetAllSongs();
+            for (int i = 0; i < songs.Count; i++)
+            {
+                Console.WriteLine(i+1 + " - " + songs[i].ToString());
+            }
+        }
+
+        public Song SelectOneSong()
+        {
+            List<Song> allSongs = GetAllSongs();
+            PrintAllSongs();
+            Console.Write("Select one song: ");
+            int n = ValidNumber(allSongs.Count);
+            return allSongs[n - 1];
+        }
+        #endregion
+
+
+        #region Add
         public void AddSong()
         {
             //author
@@ -55,6 +100,7 @@ namespace DAN_XXXIX_AndrejaKolesar
                 sw.WriteLine(song.ToString());
             }
         }
+        #endregion
 
 
         #region validation methods

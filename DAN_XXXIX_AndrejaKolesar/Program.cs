@@ -10,8 +10,10 @@ namespace DAN_XXXIX_AndrejaKolesar
     {
         static void Main(string[] args)
         {
+
             Song song = new Song();
-            song.AddSong();
+            Player player = new Player();
+            
             string selected;
             do
             {
@@ -21,8 +23,10 @@ namespace DAN_XXXIX_AndrejaKolesar
                 switch (selected)
                 {
                     case "1":
+                        song.AddSong();
                         break;
                     case "2":
+                        player.PlaySong(); 
                         break;
                     case "3":
                         break;
