@@ -8,20 +8,26 @@ using System.Threading.Tasks;
 namespace DAN_XXXIX_AndrejaKolesar
 {
     class Program
-    {
-        public static AutoResetEvent go = new AutoResetEvent(false);
-        public static void TurnOff()
+    { 
+        //delegate and event based on that delegate
+        public delegate void Notification();
+        public static event Notification onNotification;
+        //raising event 
+        public static void Notify()
         {
-            Console.Clear();
-            Console.WriteLine("Turning off audio player...");
-            Thread.Sleep(2000);
+            if (onNotification != null)
+            {
+                onNotification();
+            }
         }
 
         //Menu for Audio Player
         static void Main(string[] args)
         {
             Song song = new Song();
+            
             Player player = new Player();
+            onNotification = player.TurnOff;
             string selected;
             do
             {
@@ -34,22 +40,24 @@ namespace DAN_XXXIX_AndrejaKolesar
                         song.AddSong();
                         break;
                     case "2":
-                        bool playAgain = true;
-                        while (playAgain)
+                        
+                        while (true)
                         {
-                            player.PlaySong(false);
-                            Console.WriteLine("Do you want one more song? [yes/no]");
+                            player.PlaySong();
+                            Console.Write("Do you want one more song or to turn off player? [yes -> new song /no -> turn off] : ");
                             string answer = Validation.YesNo();
                             if (answer == "no" || answer == "n")
                             {
-                                playAgain = false;
+                                Notify();
+                                selected = "3";
+                                break;
                             }
                         }
                         break;
                     case "3":
                         break;
                     default:
-                        Console.Write("Invalid input.Try again: ");
+                        Console.Write("Invalid input. ");
                         break;
                 }
 

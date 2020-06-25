@@ -11,6 +11,10 @@ namespace DAN_XXXIX_AndrejaKolesar
     {
         public static string fileName = @"..\..\Reklame.txt";
 
+        /// <summary>
+        /// Return all ads from file Reklame.txt
+        /// </summary>
+        /// <returns></returns>
         public static List<string> GetAllAds()
         {
             List<string> allAds = new List<string>();

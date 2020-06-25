@@ -79,14 +79,14 @@ namespace DAN_XXXIX_AndrejaKolesar
             List<Song> allSongs = GetAllSongs();
             PrintAllSongs();
 
-            Console.Write("*You can stop song with Tab key. \nSelect one song: ");
+            Console.Write("Select one song: ");
             int n = Validation.ValidNumber(allSongs.Count);
             return allSongs[n - 1];
         }
         #endregion
 
 
-        #region Add
+        #region adding new song
         /// <summary>
         /// Add new song to the file Music.txt. Ask user for all information of the song.
         /// </summary>
